@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { ShadowPropTypesIOS, View } from "react-native";
 import React from 'react';
 
 export default function BlockRGB(props) {
@@ -7,7 +7,8 @@ export default function BlockRGB(props) {
       style={{
         backgroundColor: `rgb(${props.red}, ${props.green}, ${props.blue})`,
         padding: 30,
-        width: "100%",
+        height: props.height,
+        width: props.width,
       }}
     ></View>
   );

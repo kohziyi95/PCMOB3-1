@@ -7,9 +7,14 @@ import {
   TouchableOpacity,
   View,
   Button,
+  Dimensions
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import BlockRGB from "./BlockRGB";
+
+const screenWidth = Dimensions.get("window").width;
+const numColumns = 4;
+const tileSize = screenWidth/numColumns;
 
 function HomeScreen({ navigation }) {
   const [colorArray, setColorArray] = useState([]);
@@ -22,8 +27,8 @@ function HomeScreen({ navigation }) {
 
   function renderItem({ item }) {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("Details", item)}>
-        <BlockRGB red={item.red} green={item.green} blue={item.blue} />
+      <TouchableOpacity style={{ height:tileSize , width: tileSize}} onPress={() => navigation.navigate("Details", item)}>
+        <BlockRGB red={item.red} green={item.green} blue={item.blue} height={tileSize} width={tileSize}/>
       </TouchableOpacity>
     );
   }
@@ -45,14 +50,7 @@ function HomeScreen({ navigation }) {
 
   return (
     <View>
-      <View
-        style={{
-          flex: 2,
-          flexDirection: "row",
-          margin: 10,
-          justifyContent: "center",
-        }}
-      >
+      <View>
         <TouchableOpacity style={styles.button} onPress={addColor}>
           <Text style={{ color: "black" }}>Add Colour</Text>
         </TouchableOpacity>
@@ -61,8 +59,9 @@ function HomeScreen({ navigation }) {
           <Text style={{ color: "black" }}>Reset</Text>
         </TouchableOpacity>
       </View>
-
-      <FlatList style={styles.list} data={colorArray} renderItem={renderItem} />
+ 
+      <FlatList style={styles.list} data={colorArray} renderItem={renderItem} numColumns={numColumns}/>
+      
     </View>
   );
 }
@@ -119,4 +118,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
   },
+  list: {
+    width: "100%",
+
+  }
 });
