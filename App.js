@@ -68,19 +68,49 @@ function HomeScreen({ navigation }) {
 
 function DetailsScreen({ navigation, route }) {
   const { red, green, blue } = route.params;
-  return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("Home")}
-      style={[
-        styles.container,
-        { backgroundColor: `rgb(${red}, ${green}, ${blue})` },
-      ]}
-    >
-      <Text style={styles.detailText}>Red: {red}</Text>
-      <Text style={styles.detailText}>Green: {green}</Text>
-      <Text style={styles.detailText}>Blue: {blue}</Text>
-    </TouchableOpacity>
-  );
+  if (((red*0.299) + (green*0.587) + (blue*0.114)) > 186) {
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Home")}
+        style={[
+          styles.container,
+          { backgroundColor: `rgb(${red}, ${green}, ${blue})` },
+        ]}
+      >
+        <Text style={styles.detailTextBlack}>Red: {red}</Text>
+        <Text style={styles.detailTextBlack}>Green: {green}</Text>
+        <Text style={styles.detailTextBlack}>Blue: {blue}</Text>
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Home")}
+        style={[
+          styles.container,
+          { backgroundColor: `rgb(${red}, ${green}, ${blue})` },
+        ]}
+      >
+        <Text style={styles.detailTextWhite}>Red: {red}</Text>
+        <Text style={styles.detailTextWhite}>Green: {green}</Text>
+        <Text style={styles.detailTextWhite}>Blue: {blue}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  // return (
+  //   <TouchableOpacity
+  //     onPress={() => navigation.navigate("Home")}
+  //     style={[
+  //       styles.container,
+  //       { backgroundColor: `rgb(${red}, ${green}, ${blue})` },
+  //     ]}
+  //   >
+  //     <Text style={styles.detailText}>Red: {red}</Text>
+  //     <Text style={styles.detailText}>Green: {green}</Text>
+  //     <Text style={styles.detailText}>Blue: {blue}</Text>
+  //   </TouchableOpacity>
+  // );
 }
 
 const Stack = createStackNavigator();
@@ -114,9 +144,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 10,
   },
-  detailText: {
+
+  detailTextWhite: {
     fontSize: 24,
     marginBottom: 20,
+    color: '#ffffff'
+  },
+
+  detailTextBlack: {
+    fontSize: 24,
+    marginBottom: 20,
+    color: '#000000'
+
   },
   list: {
     width: "100%",
